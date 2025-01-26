@@ -12,6 +12,7 @@ import os
 
 # Define the relative file path
 file_path = os.path.join("Resources", "final2_cleaned_dataset.csv")
+data = pd.read_csv(file_path)
 
 # Define the relative SQLite database path for deployment
 db_file = "Resources/DW_cleaned_data.db"
