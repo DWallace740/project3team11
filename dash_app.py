@@ -60,6 +60,7 @@ print(f"Rows inserted into the database: {row_count}")
 
 # Initialize Dash app
 app = dash.Dash(__name__)
+server = app.server
 app.title = "Health Measures Dashboard"
 
 # Connect to SQLite and load unique options for dropdowns
