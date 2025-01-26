@@ -66,7 +66,8 @@ app.title = "Health Measures Dashboard"
 # Connect to SQLite and load unique options for dropdowns
 conn = sqlite3.connect(db_file)
 topics = pd.read_sql_query('SELECT DISTINCT Topic FROM health_data', conn)['Topic'].tolist()
-locations = pd.read_sql_query('SELECT DISTINCT Location FROM health_data', conn)['Location'].tolist()
+locations_df = pd.read_sql_query('SELECT DISTINCT Location, LocationID FROM health_data', conn)
+locations = [{"label": loc, "value": loc_id} for loc, loc_id in zip(locations_df["Location"], locations_df["LocationID"])]
 years = pd.read_sql_query('SELECT DISTINCT Year FROM health_data', conn)['Year'].sort_values().tolist()
 sexes = ['All'] + pd.read_sql_query('SELECT DISTINCT Sex FROM health_data', conn)['Sex'].tolist()
 ages = ['All'] + pd.read_sql_query('SELECT DISTINCT Age FROM health_data', conn)['Age'].tolist()
@@ -152,7 +153,7 @@ def update_visuals(selected_topic, selected_location, selected_year, selected_se
     query = f'''
     SELECT * FROM health_data
     WHERE Topic = "{selected_topic}" 
-    AND Location = "{selected_location}" 
+    AND LocationID = "{selected_location}" 
     AND Year = {selected_year}
     '''
     
@@ -170,7 +171,7 @@ def update_visuals(selected_topic, selected_location, selected_year, selected_se
     # Query for trends over time
     trend_query = f'''
     SELECT Year, AVG(Value) as AvgValue FROM health_data
-    WHERE Topic = "{selected_topic}" AND Location = "{selected_location}"
+    WHERE Topic = "{selected_topic}" AND LocationID = "{selected_location}"
     '''
     if selected_sex != 'All':
         trend_query += f' AND Sex = "{selected_sex}"'
