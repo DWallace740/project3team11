@@ -1,12 +1,61 @@
-import dash
-from dash import dcc, html, Input, Output
-import plotly.express as px
 import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+import plotly.graph_objects as go
+import plotly.express as px
 import sqlite3
 import textwrap
+import dash
+from dash import dcc, html, Input, Output
+import os
 
-# Define your SQLite database path
-db_file = r"C:\Users\info\Desktop\project3team11\Resources\DW_cleaned_data.db"
+# Define the relative file path
+file_path = os.path.join("Resources", "final2_cleaned_dataset.csv")
+
+# Define the relative SQLite database path for deployment
+db_file = "Resources/DW_cleaned_data.db"
+
+# Connect to SQLite database (creates the file if it doesn't exist)
+conn = sqlite3.connect(db_file)
+cursor = conn.cursor()
+
+
+# Define the table schema based on the dataset columns
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS health_data (
+    Year INTEGER,
+    Sex TEXT,
+    Age TEXT,
+    Grade TEXT,
+    Race_Ethnicity TEXT,
+    DataSource TEXT,
+    Location TEXT,
+    LocationID TEXT,
+    LocationID_1 INTEGER,
+    Geolocation TEXT,
+    Topic TEXT,
+    TopicID TEXT,
+    Question TEXT,
+    QuestionID TEXT,
+    Value REAL,
+    DataValueUnit TEXT,
+    DataValueType TEXT,
+    DataValueTypeID TEXT,
+    LowConfidenceLimit REAL,
+    HighConfidenceLimit REAL
+)
+''')
+
+# Commit the table creation
+conn.commit()
+
+# Load data from the DataFrame into the SQLite table
+data.to_sql('health_data', conn, if_exists='replace', index=False)
+
+# Confirm data insertion by querying the database
+row_count = cursor.execute('SELECT COUNT(*) FROM health_data').fetchone()[0]
+print(f"Rows inserted into the database: {row_count}")
 
 # Initialize Dash app
 app = dash.Dash(__name__)
