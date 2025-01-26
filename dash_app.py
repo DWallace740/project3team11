@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS health_data (
     Sex TEXT,
     Age TEXT,
     Grade TEXT,
-    Race/Ethnicity TEXT,
+    Race_Ethnicity TEXT,
     DataSource TEXT,
     Location TEXT,
     LocationID TEXT,
