@@ -78,20 +78,98 @@ app.layout = html.Div(style={"backgroundColor": "#f9f9f9", "fontFamily": "Arial,
         "marginBottom": "10px"
     }),
 
-    # Introduction Section
-    html.Div([
-        html.H3("Project 11 Team 3", style={"textAlign": "center", "color": "#2c3e50", "fontWeight": "bold"}),
-        html.P(
-            "Healthy Living, Diverse Challenges: Exploring Health Trends by Topic and Region",
-            style={"textAlign": "center", "color": "#34495e", "fontSize": "18px", "marginBottom": "10px"}
-        ),
-        html.P(
-            "Our aim is to provide an intuitive platform for exploring key health topics, uncovering patterns, and "
-            "facilitating informed decision-making. The project combines data analysis with interactive visualizations "
-            "to highlight the relationships between chronic diseases, demographic factors, and lifestyle risks.",
-            style={"textAlign": "center", "color": "#34495e", "fontSize": "16px", "marginBottom": "20px"}
-        )
-    ], style={"marginBottom": "30px"}),
+# Introduction Section
+html.Div([
+    html.H3("Project 11 Team 3", style={
+        "textAlign": "center", 
+        "color": "#2c3e50", 
+        "fontWeight": "bold", 
+        "fontSize": "24px"
+    }),
+    html.P(
+        "Healthy Living, Diverse Challenges: Exploring Health Trends by Topic and Region",
+        style={
+            "textAlign": "center", 
+            "color": "#DA70D6", 
+            "fontSize": "18px", 
+            "marginBottom": "10px", 
+            "fontWeight": "bold"
+        }
+    ),
+   
+    html.H4("Overview of the Visualizations", style={
+        "textAlign": "center", 
+        "color": "#4B0082", 
+        "fontWeight": "bold", 
+        "marginTop": "20px", 
+        "fontSize": "20px"
+    }),
+    html.P(
+        "This dashboard provides a series of interactive charts that illustrate key trends, correlations, and "
+        "comparisons related to Social Determinants of Health. Each chart dynamically updates based on the filters "
+        "applied, offering a tailored analysis of the selected dataset. Below is a breakdown of what each chart represents:",
+        style={
+            "textAlign": "left", 
+            "color": "#34495e", 
+            "fontSize": "18px", 
+            "marginBottom": "20px"
+        }
+    ),
+    html.Ul([
+        html.Li([
+            html.Span("Average Values by Location: ", style={"fontWeight": "bold"}), 
+            "This bar chart displays the average values"
+            "for the selected topic across different locations (e.g., states or territories). "
+            "It helps compare geographic variations and identify areas"
+            " with higher or lower averages for specific social determinants."
+        ], style={"textAlign": "left", "marginBottom": "10px"}),
+        html.Li([
+            html.Span("Trends Over Time: ", style={"fontWeight": "bold"}), 
+            "The line chart illustrates how the average values change over time. This visualization helps identify patterns, improvements, "
+            "or declines for the selected topic over multiple years."
+        ], style={"textAlign": "left", "marginBottom": "10px"}),
+        html.Li([
+            html.Span("Correlation Between Confidence Limits: ", style={"fontWeight": "bold"}), 
+            "The scatterplot shows the relationship between the high and low confidence limits for the data. It highlights the consistency "
+            "or variability within the dataset and may indicate trends in data reliability."
+        ], style={"textAlign": "left", "marginBottom": "10px"}),
+        html.Li([
+            html.Span("Top 10 Metrics for Social Determinants: ", style={"fontWeight": "bold"}), 
+            "This bar chart ranks the top 10 metrics or questions with the highest average values. It provides insight into the most prominent "
+            "or impactful factors within the dataset."
+        ], style={"textAlign": "left", "marginBottom": "10px"}),
+        html.Li([
+            html.Span("Filter Panel: ", style={"fontWeight": "bold"}), 
+            "The filter panel allows users to narrow the scope of the visualizations by selecting specific years, demographic variables (e.g., age, sex, race/ethnicity), "
+            "and topics. This helps customize the analysis to suit specific areas of interest."
+        ], style={"textAlign": "left", "marginBottom": "10px"})
+    ], style={
+        "fontSize": "15px", 
+        "color": "#34495e", 
+        "marginBottom": "20px", 
+        "paddingLeft": "0px", 
+        "listStyleType": "none"
+    }),
+    html.H4("Important Notes on Filters", style={
+        "textAlign": "center", 
+        "fontWeight": "bold", 
+        "color": "#4B0082", 
+        "marginTop": "20px", 
+        "fontSize": "20px"
+    }),
+    html.Ul([
+        html.Li("Applying more than two filters may result in no data being displayed.", 
+                style={"marginBottom": "15px", "textAlign": "center"}),
+        html.Li("Start with one or two filters for broader insights, then refine further.", 
+                style={"marginBottom": "15px", "textAlign": "center"}),
+    ], style={
+        "fontSize": "14px", 
+        "color": "#4B0082", 
+        "marginBottom": "20px", 
+        "paddingLeft": "0px", 
+        "listStyleType": "none"
+    })
+], style={"marginBottom": "30px"}),
 
     # Filters Section
     html.Div([
@@ -201,6 +279,7 @@ def update_visuals(selected_topic, selected_year, selected_sex, selected_age, se
 
     conn.close()
 
+
     # Create Visuals
     # Bar Chart for Locations
     location_bar_fig = px.bar(
@@ -251,6 +330,58 @@ def update_visuals(selected_topic, selected_year, selected_sex, selected_age, se
         paper_bgcolor="#ffffff",
         font={"family": "Arial", "color": "#2c3e50"}
     )
+
+      # Create visuals with "No data available" placeholders
+    if location_data.empty:
+        location_bar_fig = go.Figure().add_annotation(
+            text="No data available",
+            xref="paper", yref="paper",
+            showarrow=False,
+            font={"size": 20}
+        )
+    else:
+        location_bar_fig = px.bar(
+            location_data,
+            x="Location",
+            y="AvgValue",
+            title=f"Average Values by Location for {selected_topic} ({selected_year})"
+        )
+
+    if trend_data.empty:
+        line_fig = go.Figure().add_annotation(
+            text="No data available",
+            xref="paper", yref="paper",
+            showarrow=False,
+            font={"size": 20}
+        )
+    else:
+        line_fig = px.line(trend_data, x="Year", y="AvgValue", title=f"Trends for {selected_topic}")
+
+    if scatter_data.empty:
+        scatter_fig = go.Figure().add_annotation(
+            text="No data available",
+            xref="paper", yref="paper",
+            showarrow=False,
+            font={"size": 20}
+        )
+    else:
+        scatter_fig = px.scatter(scatter_data, x="LowConfidenceLimit", y="HighConfidenceLimit",
+                                  title="Correlation Between Confidence Limits")
+
+    if top_questions_data.empty:
+        top_questions_fig = go.Figure().add_annotation(
+            text="No data available",
+            xref="paper", yref="paper",
+            showarrow=False,
+            font={"size": 20}
+        )
+    else:
+        top_questions_fig = px.bar(
+            top_questions_data,
+            x="Question",
+            y="AvgValue",
+            title=f"Top 10 Questions for {selected_topic}"
+        )
 
     return location_bar_fig, line_fig, scatter_fig, top_questions_fig
 
