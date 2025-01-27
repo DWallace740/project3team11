@@ -106,7 +106,7 @@ html.Div([
     }),
     html.P(
         "This dashboard provides a series of interactive charts that illustrate key trends, correlations, and "
-        "comparisons related to Social Determinants of Health. Each chart dynamically updates based on the filters "
+        "comparisons related to health topics. Each chart dynamically updates based on the filters "
         "applied, offering a tailored analysis of the selected dataset. Below is a breakdown of what each chart represents:",
         style={
             "textAlign": "left", 
@@ -134,7 +134,7 @@ html.Div([
             "or variability within the dataset and may indicate trends in data reliability."
         ], style={"textAlign": "left", "marginBottom": "10px"}),
         html.Li([
-            html.Span("Top 10 Metrics for Social Determinants: ", style={"fontWeight": "bold"}), 
+            html.Span("Top 10 Questions: ", style={"fontWeight": "bold"}), 
             "This bar chart ranks the top 10 metrics or questions with the highest average values. It provides insight into the most prominent "
             "or impactful factors within the dataset."
         ], style={"textAlign": "left", "marginBottom": "10px"}),
