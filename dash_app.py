@@ -119,9 +119,9 @@ html.Div([
         html.Li([
             html.Span("Average Values by Location: ", style={"fontWeight": "bold"}), 
             "This bar chart displays the average values"
-            "for the selected topic across different locations (e.g., states or territories). "
+            " for the selected topic across different locations (e.g., states or territories). "
             "It helps compare geographic variations and identify areas"
-            " with higher or lower averages for specific social determinants."
+            " with higher or lower averages for specific topics."
         ], style={"textAlign": "left", "marginBottom": "10px"}),
         html.Li([
             html.Span("Trends Over Time: ", style={"fontWeight": "bold"}), 
@@ -150,6 +150,18 @@ html.Div([
         "paddingLeft": "0px", 
         "listStyleType": "none"
     }),
+  html.P(
+        "The dataset contains a mix of value types, such as percentages, counts, and rates, depending on the selected topic and metric. "
+        "The visualizations are designed to dynamically adjust based on the data selected, but users should be mindful that comparisons "
+        "between different metrics or topics may not always be directly meaningful due to these differences in value types. "
+        "When in doubt, focus on trends within the same topic or consult the chart descriptions for guidance.",
+        style={
+            "textAlign": "center", 
+            "color": "#34495e", 
+            "fontSize": "14px", 
+            "marginBottom": "20px"
+        }
+    ),
     html.H4("Important Notes on Filters", style={
         "textAlign": "center", 
         "fontWeight": "bold", 
