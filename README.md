@@ -7,7 +7,7 @@ This project is a comprehensive data visualization initiative focused on chronic
 ### Key Research Questions
 
 1. **How do health issues and their key measures, including risk factors, compare across topics, and what patterns or differences emerge in their importance and connections?**
-2. **How does smoking status correlate with the prevalence of COPD?**
+2. **How does smoking affect the risk of developing chronic obstructive pulmonary disease (COPD)?**
 3. **How do cardiovascular disease rates differ across gender, age, and lifestyle factors like diet and exercise?**
 
 ---
@@ -56,8 +56,10 @@ This project is a comprehensive data visualization initiative focused on chronic
    - Bar charts highlighted topics with higher average values, allowing users to identify areas requiring more attention.
 
 2. **Smoking Status and COPD**:
-   - Scatter plots demonstrated a strong correlation between smoking status and COPD prevalence.
-   - This finding emphasizes the importance of anti-smoking campaigns in reducing COPD-related health burdens.
+   - Bar charts demonstrated a strong correlation between smoking status and COPD prevalence.
+   - Smoking not only leads to increased prevalence but also worsens COPD-related outcomes like hospitalizations and mortality
+   - Women are disproportionately affected by COPD outcomes, emphasizing the need for targeted awareness campaigns.
+   - Smoking is a major contributor to COPD risk, affecting both genders equally at high levels.
 
 3. **Cardiovascular Disease and Lifestyle Factors**:
    - Using bubble charts and filters, we explored how cardiovascular disease rates differ across demographic factors such as gender and age.
