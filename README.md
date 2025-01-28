@@ -2,91 +2,133 @@
 
 ## Overview
 
-This project is a comprehensive data visualization initiative focused on chronic disease trends. By leveraging an interactive Dash web application and SQLite for database integration, we aim to provide an intuitive platform for exploring key health topics, uncovering patterns, and facilitating informed decision-making. The project combines data analysis with interactive visualizations to highlight the relationships between chronic diseases, demographic factors, and lifestyle risks.
+This project explores health trends across chronic diseases, demographic factors, and lifestyle risks using interactive visualizations and a centralized dataset. It is designed for both technical and non-technical users, offering insights into the interconnectedness of health issues and their contributing factors.
 
-### Key Research Questions
+### Purpose 
+The primary goal of this project is to:
 
-1. **How do health issues and their key measures, including risk factors, compare across topics, and what patterns or differences emerge in their importance and connections?**
-2. **How does smoking affect the risk of developing chronic obstructive pulmonary disease (COPD)?**
-3. **How do cardiovascular disease rates differ across gender, age, and lifestyle factors like diet and exercise?**
+- Identify patterns and connections in health data.
+- Provide actionable insights into risk factors and outcomes for chronic diseases.
+- Offer an interactive, user-friendly dashboard to analyze key measures.
 
 ---
 
-## Instructions
+### Key Research Questions
 
-### **Clone the Repository**
-1. Clone this repository to your local machine:
+1. **How do health issues and their key measures, including risk factors, compare across topics?**
+2. **How does smoking affect the risk of developing chronic obstructive pulmonary disease (COPD)?**
+3. **How do cardiovascular disease rates differ across gender, age?**
+
+---
+
+### Getting Started
+This repository contains all the necessary files for exploring the project. Depending on your technical expertise, you can either:
+
+- Use the presentation to understand the key findings visually.
+- Run the Dash app for an interactive exploration of the dataset.
+- Use the HTML visualization for a spatial view of health trends.
+- Analyze the dataset using the Jupyter notebook.
+
+## Project Features 
+1. Presentation 
+ - Summarizes major health trends. 
+ - Provides visual insights into COPD
+ - Explains key findins without requiring techinical skills. 
+
+2. Interactive Dashboard (Project)
+Built with Dash and Plotly.
+Connects to an SQLite database for dynamic data querying.
+Allows users to filter by topic, location, demographic factors (age, sex, race), and time.
+
+ - Visualizes data through:
+ - Bar charts (health data by location).
+ - Line charts (trends over time).
+ - Scatterplots (correlation between confidence limits).
+ - Top 10 metric rankings.
+
+3. Choropleth Map (final_test_index.html)
+Displays health trends geographically using Leaflet.js.
+Users can filter age groups and gender distributions across states.
+Pulls data from GeoJSON format, allowing an interactive exploration of health disparities.
+
+4. Data Analysis (Project3_Group11_Notebook.ipynb)
+Exploratory Data Analysis (EDA) for chronic disease trends.
+Data cleaning steps applied before visualization.
+Uses pandas, matplotlib, seaborn, and SQLite for structured analysis
+
+---
+## **Technical Details**
+### **Tech Stack**
+- **Backend**: Python, SQLite
+- **Frontend**: Dash, Plotly, HTML, Leaflet.js
+- **Database**: SQLite
+- **Data Source**: [CDC Chronic Disease Indicators](https://chronicdata.cdc.gov/
+
+### **Repository Structure**
+```
+├── Individual Notebooks/          # Contains Jupyter notebooks for analysis
+├── Output/                        # Processed data and visualization outputs
+├── Resources/                     # Raw dataset, database files
+├── html_visualization/            # Choropleth map files
+│   ├── index.html                 # File used for interactive visual on live server
+│   ├── geojson_data_json_format.js
+│   ├── raw_json_data.js
+│   ├── style.css
+├── Project3_Group11_Notebook.ipynb  # Jupyter notebook for data analysis and dash app
+├── README.md                        # Project documentation
+├── requirements.txt                 # Dependencies
+├── Project3_11_Presentation.pdf     # PDF File of Presentation Slides 
+├── .gitignore                       # Git ignore rules
+```
+
+---
+## **Installation & Setup**
+1. **Clone the Repository**
    ```bash
-   git clone <repository_url>
-   cd <repository_name>
+   git clone https://github.com/DWallace740/project3team11.git
+   cd project3team11
    ```
 
-### **Install Dependencies**
-2. Ensure Python is installed on your machine. Install the required dependencies using:
+2. **Create a Virtual Environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate   # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install Dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-### **Set Up the SQLite Database**
-3. Initialize the database with the provided dataset by running:
+4. **Run the Dash App**
    ```bash
-   python setup_database.py
+   python dash_app.py
    ```
+   - Open a web browser and go to **`http://127.0.0.1:8050/`** to view the dashboard.
 
-### **Run the Application**
-4. Start the Dash application to interact with the visualizations:
-   ```bash
-   python app.py
-   ```
-
-5. Open your browser and navigate to `http://127.0.0.1:8050`.
+5. **Open the Choropleth Map**
+   - Navigate to `html_visualization/index.html` and open with a live server in VS Code to display in web browser.
 
 ---
-
-## Features
-
-
-
 ## Data Analysis
+### Data Cleaning Process
+- Removed unnecessary columns and duplicate values to streamline the dataset.
+- Standardized age, gender, and demographic categories for consistency.
+- Reorganized data structure to enhance querying efficiency.
+- Stored the cleaned dataset in SQLite for faster access and better integration with the dashboard.
 
-### Key Insights
+- A more detailed breakdown of the cleaning process is available in the presentation slides.
 
-1. **Health Issues Across Topics**:
-   - Analysis of average values across health topics revealed significant disparities in key measures like risk factors and prevalence rates.
-   - Bar charts highlighted topics with higher average values, allowing users to identify areas requiring more attention.
+### **Key Findings**
+- **Health Variations**: Health issues exhibit significant variation across topics, with clear connections between lifestyle risks and chronic diseases like obesity, diabetes, and cardiovascular disease.
+- **Smoking and COPD**: Smoking is a primary driver of COPD risk and progression, disproportionately impacting older adults and women.
+- **Cardiovascular Disease Trends**: Cardiovascular disease rates vary across gender and age, highlighting the importance of targeted interventions for at-risk groups.
 
-2. **Smoking Status and COPD**:
-   - Bar charts demonstrated a strong correlation between smoking status and COPD prevalence.
-   - Smoking not only leads to increased prevalence but also worsens COPD-related outcomes like hospitalizations and mortality
-   - Women are disproportionately affected by COPD outcomes, emphasizing the need for targeted awareness campaigns.
-   - Smoking is a major contributor to COPD risk, affecting both genders equally at high levels.
+### **Takeaways**
+- Chronic diseases are interconnected with social determinants and lifestyle factors.
+- Preventive measures and public health campaigns can significantly reduce risks and improve outcomes.
 
-3. **Cardiovascular Disease and Lifestyle Factors**:
-   - Using bubble charts and filters, we explored how cardiovascular disease rates differ across demographic factors such as gender and age.
-   - Key lifestyle indicators like diet and exercise were visually analyzed, revealing actionable insights for public health interventions.
-
-4. **Comparative Analysis of Topics and Questions**:
-   - The heatmap visualization allowed a high-level overview of how health measures differ across top topics and questions.
-   - This tool helped identify patterns and focus areas for further investigation.
-
-### Statistical Preprocessing
-
-- The "Value" column was normalized to ensure consistency across all visualizations.
-- Outliers were identified and treated appropriately to prevent skewed results.
-- Data aggregation techniques (e.g., grouping by topic and averaging) were applied to simplify and enhance interpretability of results.
-
----
-
-- **Dynamic Visualizations**:
-  - **Bar Chart**: Average values by health topics.
-  - **Bubble Chart**: Relationship between topics and average values.
-  - **Scatter Plot**: Trends for specific questions and topics.
-  - **Heatmap**: Comparative analysis of top topics and questions.
-- **User Interaction**:
-  - Dropdown menus and filters for customized data exploration.
-  - Fully interactive charts using Dash and Plotly.js.
-- **Database Integration**:
-  - The dataset is stored and accessed using SQLite, ensuring efficient and reliable data handling.
+For a full summary, refer to the **presentation**.
 
 ---
 
@@ -94,25 +136,14 @@ This project is a comprehensive data visualization initiative focused on chronic
 
 - **Data Privacy**: The dataset has been anonymized, ensuring that no personally identifiable information is present.
 - **Accuracy and Integrity**: Data preprocessing was conducted to ensure consistency and prevent misrepresentation.
-- **Accessibility**: The application is designed to be intuitive for a wide range of users, regardless of their technical background.
 - **Transparency**: Full documentation of data sources and external code is included to ensure reproducibility.
-
----
-
-## Handling Mixed Data Types
-
-One challenge encountered was the "Value" column in the dataset, which contained mixed data types (e.g., integers and floats). To address this, we:
-- Preprocessed and standardized the column values to ensure uniformity.
-- Applied rigorous cleaning techniques to facilitate accurate analysis and visualization.
-
-This preprocessing step ensures the reliability of all visualizations.
 
 ---
 
 ## Resources Used
 
 - **ChatGPT (AI Assistant)**: Assisted with structuring code, debugging, analyzing data, and formatting this document.
-- **Xpert Learning Assistant**: Provided additional support for understanding web scraping and data analysis concepts.
+- **Xpert Learning Assistant**: Provided additional support for understanding data analysis concepts.
 - **Pandas Documentation**: Helped with DataFrame manipulations and data cleaning.
 - **Dash and Plotly Documentation**: Used for building interactive visualizations.
 - **SQLite Documentation**: Assisted with setting up and managing the SQLite database.
@@ -140,7 +171,8 @@ This project was collaboratively developed by:
 - **Daena Wallace**
 - **Avery Javier**
 
-Our goal is to highlight critical health trends and empower users to derive actionable insights from the data.
+- This project was collaboratively developed as part of a data visualization track.
+---
 
-This project was collaboratively developed as part of a data visualization track. Our goal is to highlight critical health trends and empower users to derive actionable insights from the data.
-
+## **License**
+This project is licensed under the **MIT License**.
