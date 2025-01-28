@@ -143,7 +143,7 @@ For a full summary, refer to the **presentation**.
 ## Resources Used
 
 - **ChatGPT (AI Assistant)**: Assisted with structuring code, debugging, analyzing data, and formatting this document.
-- **Xpert Learning Assistant**: Provided additional support for understanding web scraping and data analysis concepts.
+- **Xpert Learning Assistant**: Provided additional support for understanding data analysis concepts.
 - **Pandas Documentation**: Helped with DataFrame manipulations and data cleaning.
 - **Dash and Plotly Documentation**: Used for building interactive visualizations.
 - **SQLite Documentation**: Assisted with setting up and managing the SQLite database.
