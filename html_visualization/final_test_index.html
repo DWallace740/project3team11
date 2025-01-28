@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Group Choropleth</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <!-- Our CSS -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        #map { height: 600px; width: 100%; }
+        .checkbox-group { margin: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Select View</h2>
+    <div class="checkbox-group">
+        <input type="checkbox" id="ageGroup0" value="0" onclick="updateMap('ageGroup', 0)"> Ages 0-44
+        <input type="checkbox" id="ageGroup1" value="1" onclick="updateMap('ageGroup', 1)"> Ages 18-44
+        <input type="checkbox" id="ageGroup2" value="2" onclick="updateMap('ageGroup', 2)"> Ages 45-64
+        <input type="checkbox" id="ageGroup3" value="3" onclick="updateMap('ageGroup', 3)"> Ages 65 and Older
+
+        <input type="checkbox" id="gender0" value="0" onclick="updateMap('gender', 0)"> Female
+        <input type="checkbox" id="gender1" value="1" onclick="updateMap('gender', 1)"> Male
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Load the GeoJSON data from the geojson_data.js file -->
+    <script src="geojson_data_json_format.js"></script>
+
+    <script>
+        let map;
+        let currentLayer;
+
+        // Initialize the map
+        function initMap() {
+            // Ensure geojsonData is loaded
+           
+            map = L.map('map').setView([37.8, -96], 4);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+            // Initially load the default age group data
+            loadMapData('ageGroup', 0);
+            addLegend(); // Add the legend to the map
+        }
+
+        // Load the data for a specific group (ageGroup or gender)
+        function loadMapData(type, index) {
+            if (currentLayer) {
+                map.removeLayer(currentLayer);
+            }
+
+            const data = (type === 'ageGroup') ? getAgeGroupData(index) : getGenderData(index);
+
+            const geojsonLayer = L.geoJSON(geojsonData, {
+                style: function(feature) {
+                    const stateName = feature.properties.name;
+                    const value = data[stateName] || 0;
+                    return {
+                        fillColor: getColor(value),
+                        weight: 1,
+                        opacity: 1,
+                        color: 'white',
+                        dashArray: '3',
+                        fillOpacity: 0.7
+                    };
+                }
+            }).addTo(map);
+            currentLayer = geojsonLayer;
+        }
+
+        // Get the data for the selected age group index
+        function getAgeGroupData(index) {
+            return geojsonData.features.reduce((acc, feature) => {
+                const stateName = feature.properties.name;
+                acc[stateName] = feature.properties.ageGroup[index];
+                return acc;
+            }, {});
+        }
+
+        // Get the data for the selected gender index
+        function getGenderData(index) {
+            return geojsonData.features.reduce((acc, feature) => {
+                const stateName = feature.properties.name;
+                acc[stateName] = feature.properties.gender[index];
+                return acc;
+            }, {});
+        }
+
+        // Get the color for a given value (age group or gender data)
+        function getColor(value) {
+            return value > 200000 ? '#800026' :
+           value > 100000  ? '#BD0026' :
+           value > 50000  ? '#E31A1C' :
+           value > 10000  ? '#FC4E2A' :
+           value > 5000   ? '#FD8D3C' :
+           value > 1000   ? '#FEB24C' :
+           value > 0   ? '#FED976' :
+                      '#FFEDA0';
+        }
+
+        // Add a custom legend to the map
+        function addLegend() {
+            const legend = L.control({position: 'bottomright'});
+
+            legend.onAdd = function() {
+                const div = L.DomUtil.create('div', 'legend');
+                const grades = [0, 1000, 5000, 10000, 50000, 100000];
+                const labels = [];
+                
+                // Loop through the grades and create a colored box for each range
+                for (let i = 0; i < grades.length; i++) {
+                //     const from = grades[i];
+                //     const to = grades[i + 1];
+                //     const color = getColor(from + 1); // Get color for the range
+                //     labels.push(
+                //         `<span style="background-color:${color}"></span> ${from}${to ? '&ndash;' + to : '+'}`
+                //     );
+                // }
+                
+                // div.innerHTML = labels.join('<br>');
+                      div.innerHTML +=
+                      '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+                      grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                }
+                return div;
+            };
+
+            legend.addTo(map);
+        }
+
+        // Update the map when a checkbox is clicked
+        function updateMap(type, index) {
+            // Uncheck all checkboxes of the same type before checking the clicked one
+            const checkboxes = document.querySelectorAll(`input[type="checkbox"][id^="${type}"]`);
+            checkboxes.forEach(checkbox => checkbox.checked = false);
+            document.getElementById(`${type}${index}`).checked = true;
+
+            // Load the map with the selected data type (ageGroup or gender)
+            loadMapData(type, index);
+        }
+
+        // Initialize the map when the page loads
+        window.onload = initMap;
+    </script>
+</body>
+</html>
