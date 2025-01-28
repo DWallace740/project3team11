@@ -70,7 +70,7 @@ Uses pandas, matplotlib, seaborn, and SQLite for structured analysis
 ├── Output/                        # Processed data and visualization outputs
 ├── Resources/                     # Raw dataset, database files
 ├── html_visualization/            # Choropleth map files
-│   ├── final_test_index.html
+│   ├── index.html                 # File used for interactive visual on live server
 │   ├── geojson_data_json_format.js
 │   ├── raw_json_data.js
 │   ├── style.css
@@ -107,7 +107,7 @@ Uses pandas, matplotlib, seaborn, and SQLite for structured analysis
    - Open a web browser and go to **`http://127.0.0.1:8050/`** to view the dashboard.
 
 5. **Open the Choropleth Map**
-   - Navigate to `html_visualization/final_test_index.html` and open it in a web browser.
+   - Navigate to `html_visualization/index.html` and open with a live server in VS Code to display in web browser.
 
 ---
 ## Data Analysis
