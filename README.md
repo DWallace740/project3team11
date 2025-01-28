@@ -31,20 +31,20 @@ This repository contains all the necessary files for exploring the project. Depe
 
 ## Project Features 
 1. Presentation 
-- Summarizes major health trends. 
-- Provides visual insights into COPD
-- Explains key findins without requiring techinical skills. 
+ - Summarizes major health trends. 
+ - Provides visual insights into COPD
+ - Explains key findins without requiring techinical skills. 
 
-2. Interactive Dashboard (dash_app.py)
+2. Interactive Dashboard (Project)
 Built with Dash and Plotly.
 Connects to an SQLite database for dynamic data querying.
 Allows users to filter by topic, location, demographic factors (age, sex, race), and time.
 
-- Visualizes data through:
-- Bar charts (health data by location).
-- Line charts (trends over time).
-- Scatterplots (correlation between confidence limits).
-- Top 10 metric rankings.
+ - Visualizes data through:
+ - Bar charts (health data by location).
+ - Line charts (trends over time).
+ - Scatterplots (correlation between confidence limits).
+ - Top 10 metric rankings.
 
 3. Choropleth Map (final_test_index.html)
 Displays health trends geographically using Leaflet.js.
@@ -171,7 +171,7 @@ This project was collaboratively developed by:
 - **Daena Wallace**
 - **Avery Javier**
 
-This project was collaboratively developed as part of a data visualization track.
+- This project was collaboratively developed as part of a data visualization track.
 ---
 
 ## **License**
