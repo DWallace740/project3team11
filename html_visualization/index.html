@@ -30,21 +30,43 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <!-- Load the GeoJSON data from the geojson_data.js file -->
-    <script src="/html_visualization/geojson_data_json_format.js"></script>
+    <script src="geojson_data_json_format.js"></script>
 
     <script>
         let map;
         let currentLayer;
+        let infoControl;
+        let selectedAgeGroupIndex = 0; // Default to age group 0
+        let selectedGenderIndex = -1;
 
         // Initialize the map
         function initMap() {
-            // Ensure geojsonData is loaded
            
             map = L.map('map').setView([37.8, -96], 4);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
+
+            // Initialize the info control
+            infoControl = L.control({position: 'topright'});
+            
+            infoControl.onAdd = function() {
+                this._div = L.DomUtil.create('div', 'info'); // create a div with class "info"
+                this.update();
+                return this._div;
+            };
+            
+            infoControl.update = function (stateName, value) {
+                if (stateName && value !== undefined) {
+                    this._div.innerHTML = `<strong>${stateName}</strong><br />Value: ${value}`;
+                } else {
+                    this._div.innerHTML = 'Hover over a state';
+                }
+            };
+
+            infoControl.addTo(map);
+
             // Initially load the default age group data
-            loadMapData('ageGroup', 0);
+            loadMapData('ageGroup', selectedAgeGroupIndex);
             addLegend(); // Add the legend to the map
         }
 
@@ -68,9 +90,51 @@
                         dashArray: '3',
                         fillOpacity: 0.7
                     };
+                },
+                onEachFeature: function(feature, layer) {
+                    layer.on({
+                        mouseover: function(e) {
+                            highlightFeature(e.target, feature);
+                        },
+                        mouseout: function() {
+                            resetHighlight();
+                        }
+                    });
                 }
+
             }).addTo(map);
             currentLayer = geojsonLayer;
+        }
+        // Highlight the feature (state) and update the info control
+        function highlightFeature(layer, feature) {
+            const stateName = feature.properties.name;
+            let value;
+
+            // Use the selected index to fetch the correct data value
+            if (selectedGenderIndex !== -1) {
+                // Use gender data if gender is selected
+                value = feature.properties.gender[selectedGenderIndex];
+            } else {
+                // Use ageGroup data if gender is not selected
+                value = feature.properties.ageGroup[selectedAgeGroupIndex];
+            }
+
+            
+            // Update the info control with the state's name and value
+            infoControl.update(stateName, value);
+
+            layer.setStyle({
+                weight: 2,
+                color: '#666',
+                dashArray: '',
+                fillOpacity: 0.7
+            });
+        }
+
+        // Reset the highlight style and clear the info control
+        function resetHighlight() {
+            currentLayer.resetStyle();
+            infoControl.update();
         }
 
         // Get the data for the selected age group index
@@ -109,24 +173,23 @@
 
             legend.onAdd = function() {
                 const div = L.DomUtil.create('div', 'legend');
-                const grades = [0, 1000, 5000, 10000, 50000, 100000];
+                const grades = [0, 1000, 5000, 10000, 50000, 100000, 200000];
                 const labels = [];
                 
                 // Loop through the grades and create a colored box for each range
-                for (let i = 0; i < grades.length; i++) {
-                //     const from = grades[i];
-                //     const to = grades[i + 1];
-                //     const color = getColor(from + 1); // Get color for the range
-                //     labels.push(
-                //         `<span style="background-color:${color}"></span> ${from}${to ? '&ndash;' + to : '+'}`
-                //     );
-                // }
-                
-                // div.innerHTML = labels.join('<br>');
-                      div.innerHTML +=
-                      '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-                      grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                for (var i = 0; i < grades.length; i++) {
+                    const from = grades[i];
+                    const to = grades[i + 1];
+                    const color = getColor(from + 1); // Get color for the range
+
+            // Create a color box for each range
+                    labels.push(
+                        `<span style="background-color:${color}; height: 20px; width: 20px; display: inline-block; margin-right: 5px;"></span> ${from}${to ? '&ndash;' + to : '+'}`
+                    );
                 }
+                
+                div.innerHTML = labels.join('<br>');
+                      
                 return div;
             };
 
@@ -139,6 +202,13 @@
             const checkboxes = document.querySelectorAll(`input[type="checkbox"][id^="${type}"]`);
             checkboxes.forEach(checkbox => checkbox.checked = false);
             document.getElementById(`${type}${index}`).checked = true;
+            
+            // Update the selected index and load the corresponding data
+            if (type === 'ageGroup') {
+                selectedAgeGroupIndex = index;
+            } else if (type === 'gender') {
+                selectedGenderIndex = index;
+            }
 
             // Load the map with the selected data type (ageGroup or gender)
             loadMapData(type, index);
