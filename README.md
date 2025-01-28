@@ -47,14 +47,14 @@ Allows users to filter by topic, location, demographic factors (age, sex, race),
  - Top 10 metric rankings.
 
 3. Choropleth Map (final_test_index.html)
-Displays health trends geographically using Leaflet.js.
-Users can filter age groups and gender distributions across states.
-Pulls data from GeoJSON format, allowing an interactive exploration of health disparities.
+ - Displays health trends geographically using Leaflet.js.
+ - Users can filter age groups and gender distributions across states.
+ - Pulls data from GeoJSON format, allowing an interactive exploration of health disparities.
 
 4. Data Analysis (Project3_Group11_Notebook.ipynb)
-Exploratory Data Analysis (EDA) for chronic disease trends.
-Data cleaning steps applied before visualization.
-Uses pandas, matplotlib, seaborn, and SQLite for structured analysis
+ - Exploratory Data Analysis for chronic disease trends.
+ - Data cleaning steps applied before visualization.
+ - Uses pandas, matplotlib, seaborn, and SQLite for structured analysis
 
 ---
 ## **Technical Details**
