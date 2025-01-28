@@ -76,9 +76,9 @@ Uses pandas, matplotlib, seaborn, and SQLite for structured analysis
 │   ├── style.css
 ├── Project3_Group11_Notebook.ipynb  # Jupyter notebook for data analysis and dash app
 ├── README.md                        # Project documentation
-├── requirements.txt                  # Dependencies
-
-├── .gitignore                        # Git ignore rules
+├── requirements.txt                 # Dependencies
+├── Project3_11_Presentation.pdf     # PDF File of Presentation Slides 
+├── .gitignore                       # Git ignore rules
 ```
 
 ---
