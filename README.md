@@ -17,7 +17,7 @@ The primary goal of this project is to:
 
 1. **How do health issues and their key measures, including risk factors, compare across topics?**
 2. **How does smoking affect the risk of developing chronic obstructive pulmonary disease (COPD)?**
-3. **How do cardiovascular disease rates differ across gender, age?**
+3. **How do cardiovascular disease rates differ across gender and age?**
 
 ---
 
@@ -26,7 +26,7 @@ This repository contains all the necessary files for exploring the project. Depe
 
 - Use the presentation to understand the key findings visually.
 - Run the Dash app for an interactive exploration of the dataset.
-- Use the HTML visualization for a spatial view of health trends.
+- Use the HTML visualization for a spatial view of Cardiovascular Diesease by location. 
 - Analyze the dataset using the Jupyter notebook.
 
 ## Project Features 
@@ -70,7 +70,7 @@ Uses pandas, matplotlib, seaborn, and SQLite for structured analysis
 ├── Output/                        # Processed data and visualization outputs
 ├── Resources/                     # Raw dataset, database files
 ├── html_visualization/            # Choropleth map files
-│   ├── final_test_index.html
+│   ├── index.html                 # File used for interactive visual on live server
 │   ├── geojson_data_json_format.js
 │   ├── raw_json_data.js
 │   ├── style.css
@@ -107,7 +107,7 @@ Uses pandas, matplotlib, seaborn, and SQLite for structured analysis
    - Open a web browser and go to **`http://127.0.0.1:8050/`** to view the dashboard.
 
 5. **Open the Choropleth Map**
-   - Navigate to `html_visualization/final_test_index.html` and open it in a web browser.
+   - Navigate to `html_visualization/index.html` and open with a live server in VS Code to display in web browser.
 
 ---
 ## Data Analysis
