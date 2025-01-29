@@ -75,6 +75,7 @@ Allows users to filter by topic, location, demographic factors (age, sex, race),
 │   ├── raw_json_data.js
 │   ├── style.css
 ├── Project3_Group11_Notebook.ipynb  # Jupyter notebook for data analysis and dash app
+├── dash_app.py                      # Dash app
 ├── README.md                        # Project documentation
 ├── requirements.txt                 # Dependencies
 ├── Project3_11_Presentation.pdf     # PDF File of Presentation Slides 
